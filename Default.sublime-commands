@@ -1,0 +1,6 @@
+[
+    {
+        "caption": "Update Languages", 
+        "command": "update_language_commands"
+    }
+]

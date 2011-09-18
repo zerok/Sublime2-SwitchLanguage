@@ -1,0 +1,16 @@
+# Language switch command for Sublime Text 2
+
+This plug-in provides a command for changing the dictionary used in the current view. To switch for instance to the 
+English dictionary, execute the "Switch language: en_GB" command.
+
+## Installation
+
+To install this plug-in simply clone this repository into your "Packages" directory:
+
+<pre>
+cd ~/Library/Application\ Support/Sublime\ Text\ 2/Packages
+git clone https://github.com/zerok/Sublime2-SwitchLanguage.git SwitchLanguage
+</pre>
+
+SwitchLangauge creates a command for every dictionary it can find in your Packages directory. To initialize the 
+commands, execute "Update Language Commands"
