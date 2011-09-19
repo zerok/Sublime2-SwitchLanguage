@@ -3,7 +3,8 @@ from __future__ import with_statement
 import sublime
 import sublime_plugin
 
-from os.path import basename, splitext, dirname, abspath, join
+from os.path import basename, splitext, join, dirname
+import os
 import glob
 import json
 
@@ -16,7 +17,7 @@ class UpdateLanguageCommands(sublime_plugin.ApplicationCommand):
     def run(self, *args, **kwargs):
         root = sublime.packages_path()
         languages = {}
-        commands_file = join(dirname(abspath(__file__)),
+        commands_file = join(get_commands_folder(),
                 'SwitchLanguage.sublime-commands')
         commands = []
         for file_ in glob.glob(u'{0}/**/*.dic'.format(root.rstrip('/'))):
@@ -39,3 +40,19 @@ class SwitchLanguage(sublime_plugin.TextCommand):
     def run(self, edit, lang=None):
         if lang is not None:
             self.view.settings().set('dictionary', lang)
+
+
+def get_commands_folder():
+    """
+    This method returns the folder to which this plugin writes its extra
+    commands. First it tries to find its own installation path and writes
+    the commands in there if the path is writable. If this is not the case
+    the User's folder will be used instead.
+    """
+    root = sublime.packages_path()
+    globstr = join(root, '**', basename(__file__))
+    for file_ in glob.glob(globstr):
+        dir_ = dirname(file_)
+        if os.access(dir_, os.W_OK):
+            return dir_
+    return join(root, 'User')
